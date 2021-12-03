@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <link
+      href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1 class="text-center text-3xl">Socket IO</h1>
+
+    <ul class = " text-xl m-8 bg-gray-200 rounded-lg divide-solid" id="messages"></ul>
+
+    <div class="flex space-x-4 justify-center">
+      <input
+        id="myMessage"
+        type="text"
+        placeholder="Escribe tu mensaje"
+        class="
+          w-3/5
+          focus:outline-none focus:placeholder-gray-400
+          text-gray-600
+          placeholder-gray-600
+          pl-12
+          bg-gray-200
+          rounded-full
+          py-3
+        "
+      />
+      <button
+        type="button"
+        id="send"
+        class="
+          inline-flex
+          items-center
+          justify-center
+          rounded-full
+          h-12
+          w-12
+          transition
+          duration-500
+          ease-in-out
+          text-white
+          bg-blue-500
+          hover:bg-blue-400
+          focus:outline-none
+          
+        "
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+          class="h-6 w-6 transform rotate-90"
+        >
+          <path
+            d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"
+          ></path>
+        </svg>
+      </button>
+    </div>
+    <!--JQUERY-->
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
+      integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI="
+      crossorigin="anonymous"
+    ></script>
+
+    <!--SOCKET IO-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.0/socket.io.min.js"></script>
+
+    <!--Uso de funciones Socket io-->
+    <script>
+      const socket = io();
+
+      //socket.emit("message", "Holaaaa");
+
+      //evento del servidor
+      socket.on("message", function (msg) {
+        $("#messages").append('<li class="m-4">' + msg + "</li>");
+      });
+
+      $("#send").on("click", function () {
+        console.log($("#myMessage").val());
+
+        socket.send($("#myMessage").val());
+        $("#myMessage").val("");
+      });
+    </script>
+  </body>
+</html>
